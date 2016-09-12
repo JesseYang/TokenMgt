@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'mongoid', '~> 5.1.3'
 gem 'haml-rails'
+gem 'execjs'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
