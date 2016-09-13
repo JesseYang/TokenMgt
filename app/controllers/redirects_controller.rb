@@ -7,5 +7,4 @@ class RedirectsController < ApplicationController
 
     render text: params.inspect
   end
-
 end

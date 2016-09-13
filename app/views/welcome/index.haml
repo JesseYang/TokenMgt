@@ -1,4 +1,97 @@
-%h1 Welcome#index
-%p Find me in app/views/welcome/index.html.haml
+- content_for :app_head do
+  = javascript_include_tag "pages/welcome/index-bundle"
+  = stylesheet_link_tag "pages/welcome/index-bundle", :media => "all"
+  :javascript
+    window.platform = "#{@platform}"
 
-=link_to "sign in box.com", "https://account.box.com/api/oauth2/authorize?response_type=code&client_id=	buq4gus2fhoariwcaq0r15nf6l2u8auf&state=hello&redirect_uri=https://117.121.10.67:3001/redirects/box"
+- content_for :content do
+  .content-wrapper.auto.mt40.w70
+    %ul.nav.nav-tabs
+      %li.active
+        %a.box-link{"data-toggle" => "tab", :href => "#box-tab"} Box
+      %li
+        %a.onedrive-link{"data-toggle" => "tab", :href => "#onedrive-tab"} OneDrive
+    .tab-content.w80.auto
+      #box-tab.tab-pane.active
+        .table-wrapper.auto
+          - if @box_accounts[:data].length == 0
+            .notice.mt20.ml20 没有box.com账户
+          - else
+            %table.table
+              %tr.header
+                %th.column-account 账号
+                %th.column-password 密码
+                %th.column-password 操作
+              - @box_accounts[:data].each do |e|
+                %tr.record{data: {id: e.id}}
+                  %td= e.account
+                  %td= e.password
+                  %td
+                    = link_to "登录", e.login_url
+            .select-page 
+              %span.totalitems= "共#{@box_accounts[:total_page]}页,总计#{@box_accounts[:total_number]}条"
+              %span.choice-page
+                %ul.pagination.pagination-sm
+                  %li
+                    %a{:href => "/?tab=box&page=#{@box_accounts[:previous_page]}"} «
+                  - ( (@box_accounts[:previous_page] > 2 ? @box_accounts[:previous_page] - 2 : 1) .. (@box_accounts[:next_page] < @box_accounts[:total_page] - 2 ? @box_accounts[:next_page] + 2 : @box_accounts[:total_page]) ).to_a.each do |page|
+                    %li
+                      %a{:href => "/?tab=box&page=#{page}"}= page
+                  %li
+                    %a{:href => "/?tab=box&page=#{@box_accounts[:next_page]}"} »
+      #onedrive-tab.tab-pane
+        .table-wrapper.auto
+          - if @onedrive_accounts[:data].length == 0
+            .notice.mt20.ml20 没有onedrive.com账户
+          - else
+            %table.table
+              %tr.header
+                %th.column-account 账号
+                %th.column-password 密码
+                %th.column-password 操作
+              - @onedrive_accounts[:data].each do |e|
+                %tr.record{data: {id: e.id}}
+                  %td= e.account
+                  %td= e.password
+                  %td
+                    = link_to "登录", "javascript:void(0);"
+            .select-page 
+              %span.totalitems= "共#{@onedrive_accounts[:total_page]}页,总计#{@onedrive_accounts[:total_number]}条"
+              %span.choice-page
+                %ul.pagination.pagination-sm
+                  %li
+                    %a{:href => "/?tab=onedrive&page=#{@onedrive_accounts[:previous_page]}"} «
+                  - ( (@onedrive_accounts[:previous_page] > 2 ? @onedrive_accounts[:previous_page] - 2 : 1) .. (@onedrive_accounts[:next_page] < @onedrive_accounts[:total_page] - 2 ? @onedrive_accounts[:next_page] + 2 : @onedrive_accounts[:total_page]) ).to_a.each do |page|
+                    %li
+                      %a{:href => "/?tab=onedrive&page=#{page}"}= page
+                  %li
+                    %a{:href => "/?tab=onedrive&page=#{@onedrive_accounts[:next_page]}"} »
+      %button.mt30.l.btn.btn-primary{"data-toggle" => "modal", "data-target" => "#create-account", :type => "button"} 创建
+
+
+
+  #create-account.modal.fade
+    .modal-dialog
+      .modal-content
+        = form_tag(accounts_path, method: "post", multipart: true) do
+          .modal-header
+            %button.close{type: "button", "data-dismiss" => "modal", "aria-hidden" => "true"} &times;
+            %h3 创建新账户
+          .modal-body
+            .form-group
+              = label_tag :platform, "平台"
+              = select_tag :platform, options_for_select(Account.platforms_for_select), class: "form-control"
+            .form-group
+              = label_tag :account, "账号"
+              = text_field_tag :account, "", class: "form-control"
+            .form-group
+              = label_tag :account, "密码"
+              = text_field_tag :password, "", class: "form-control"
+          .modal-footer
+            = submit_tag "确定", :class => 'btn-primary btn'
+            %a.btn.btn-default{href: "#", data: {dismiss: "modal"}, "aria-hidden" => "true"} 取消
+
+/ %h1 Welcome#index
+/ %p Find me in app/views/welcome/index.html.haml
+
+/ =link_to "sign in box.com", "https://account.box.com/api/oauth2/authorize?response_type=code&client_id= buq4gus2fhoariwcaq0r15nf6l2u8auf&state=hello&redirect_uri=https://117.121.10.67:3001/redirects/box"
