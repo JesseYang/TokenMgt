@@ -5,6 +5,9 @@ class RedirectsController < ApplicationController
     Rails.logger.info params.inspect
     Rails.logger.info "AAAAAAAAAAAAAAAAAAAAA"
 
-    render text: params.inspect
+    account = Account.where(id: params[:state]).first
+    retval = account.get_access_token(params[:code])
+
+    render text: retval.inspect
   end
 end

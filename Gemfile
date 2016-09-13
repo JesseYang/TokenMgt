@@ -8,6 +8,7 @@ gem 'execjs'
 gem 'compass-rails'
 gem 'bootstrap-sass'
 gem 'kaminari'
+gem 'httparty'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
