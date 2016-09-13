@@ -35,7 +35,7 @@ class Account
     end
   end
 
-  def get_token(code)
+  def get_tokens(code)
     options = {
       body: {
         grant_type: "authorization_code",
@@ -54,7 +54,7 @@ class Account
       })
   end
 
-  def refresh_token
+  def refresh_tokens
     options = {
       body: {
         grant_type: "refresh_token",
