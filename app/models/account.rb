@@ -35,11 +35,30 @@ class Account
     end
   end
 
-  def get_access_token(code)
+  def get_token(code)
     options = {
       body: {
         grant_type: "authorization_code",
         code: code,
+        client_id: BOX_CLIENT_ID,
+        client_secret: BOX_CLIENT_SECRET
+      }
+    }
+    response = self.class.post("/oauth2/token", options)
+    data = JSON.parse(response.body)
+    self.update_attributes(
+      {
+        access_token: data["access_token"],
+        refresh_token: data["refresh_token"],
+        token_updated_at: Time.now
+      })
+  end
+
+  def refresh_token
+    options = {
+      body: {
+        grant_type: "refresh_token",
+        refresh_token: self.refresh_token,
         client_id: BOX_CLIENT_ID,
         client_secret: BOX_CLIENT_SECRET
       }
