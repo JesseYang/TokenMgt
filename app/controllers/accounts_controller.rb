@@ -13,4 +13,13 @@ class AccountsController < ApplicationController
     access_tokens = box_accounts.map { |e| e.access_token }
     render text: access_tokens.join(',') and return
   end
+
+  def update
+    @account = Account.where(id: params[:id]).first
+    @account.update_attributes({
+      account: params[:account],
+      password: params[:password]
+    })
+    redirect_to "/?platform=#{params[:platform]}" and return
+  end
 end

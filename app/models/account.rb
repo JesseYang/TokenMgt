@@ -14,7 +14,10 @@ class Account
 
   BOX_CLIENT_ID = "buq4gus2fhoariwcaq0r15nf6l2u8auf"
   BOX_CLIENT_SECRET = "gi5W2ysE3Q0CtNhoqbVHjD6GMSaaycPQ"
-  BOX_REDIRECT_URI = "https://117.121.10.67:3001"
+  BOX_REDIRECT_URI = "https://117.121.10.67:3001/redirects/box"
+
+  ONEDRIVE_CLIENT_ID = "f396f15e-356d-45df-83a9-8bafb50129ad"
+  ONEDRIVE_REDIRECT_URI = "https://117.121.10.67:3001/redirects/onedrive"
 
 
   def self.create_account(platform, account, password)
@@ -31,7 +34,10 @@ class Account
 
   def login_url
     if self.platform == "box"
-      return "https://account.box.com/api/oauth2/authorize?response_type=code&client_id=#{BOX_CLIENT_ID}&state=#{self.id.to_s}&redirect_uri=#{BOX_REDIRECT_URI}/redirects/box"
+      return "https://account.box.com/api/oauth2/authorize?response_type=code&client_id=#{BOX_CLIENT_ID}&state=#{self.id.to_s}&redirect_uri=#{BOX_REDIRECT_URI}"
+    end
+    if self.platform == "onedrive"
+      return "https://login.live.com/oauth20_authorize.srf?client_id=#{ONEDRIVE_CLIENT_ID}&scope=onedrive.readwrite offline_access&response_type=code&redirect_uri=#{ONEDRIVE_REDIRECT_URI}"
     end
   end
 

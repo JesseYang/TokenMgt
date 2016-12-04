@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   # Example resource route with options:
   resources :redirects do
     collection do
-      get 'box'
+      get :box
+      get :onedrive
     end
   end
 

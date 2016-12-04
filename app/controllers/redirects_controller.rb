@@ -5,4 +5,7 @@ class RedirectsController < ApplicationController
     retval = account.get_tokens(params[:code])
     redirect_to "/" and return
   end
+
+  def onedrive
+  end
 end
