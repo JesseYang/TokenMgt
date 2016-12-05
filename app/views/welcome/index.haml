@@ -55,7 +55,7 @@
                   %td.account= e.account
                   %td.password= e.password
                   %td
-                    = link_to "登录", "javascript:void(0);"
+                    = link_to "登录", e.login_url
                     = link_to "编辑", "javascript:void(0);", class: "edit-account"
             .select-page 
               %span.totalitems= "共#{@onedrive_accounts[:total_page]}页,总计#{@onedrive_accounts[:total_number]}条"
