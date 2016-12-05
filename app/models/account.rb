@@ -55,7 +55,7 @@ class Account
   def get_tokens(code)
     case self.platform
     when "box"
-      self.base_uri BOX_BASE_URI
+      Account.base_uri BOX_BASE_URI
       options = {
         body: {
           grant_type: "authorization_code",
@@ -66,14 +66,13 @@ class Account
       }
       response = self.class.post("/oauth2/token", options)
       data = JSON.parse(response.body)
-      self.update_attributes(
-        {
+      self.update_attributes({
           access_token: data["access_token"],
           refresh_token: data["refresh_token"],
           token_updated_at: Time.now
         })
     when "onedrive"
-      self.base_uri ONEDRIVE_BASE_URI
+      Account.base_uri ONEDRIVE_BASE_URI
       options = {
         body: {
           grant_type: "authorization_code",
@@ -84,9 +83,12 @@ class Account
         }
       }
       response = self.class.post("/oauth20_token.srf", options)
-      logger.info "AAAAAAAAAAAAAAA"
-      logger.info response
-      logger.info "AAAAAAAAAAAAAAA"
+      data = JSON.parse(response.body)
+      self.update_attributes({
+          access_token: data["access_token"],
+          refresh_token: data["refresh_token"],
+          token_updated_at: Time.now
+        })
     end
   end
 
