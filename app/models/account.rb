@@ -45,7 +45,7 @@ class Account
       return "https://account.box.com/api/oauth2/authorize?response_type=code&client_id=#{BOX_CLIENT_ID}&state=#{self.id.to_s}&redirect_uri=#{BOX_REDIRECT_URI}"
     end
     if self.platform == "onedrive"
-      return "https://login.live.com/oauth20_authorize.srf?client_id=#{ONEDRIVE_CLIENT_ID}&scope=onedrive.readwrite offline_access&response_type=code&state=#{self.id.to_s}&redirect_uri=#{ONEDRIVE_REDIRECT_URI}?id=#{self.id.to_s}"
+      return "https://login.live.com/oauth20_authorize.srf?client_id=#{ONEDRIVE_CLIENT_ID}&scope=onedrive.readwrite offline_access&response_type=code&state=#{self.id.to_s}&redirect_uri=#{ONEDRIVE_REDIRECT_URI}"
     end
     if self.platform == "googledrive"
       return "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=#{GOOGLEDRIVE_CLIENT_ID}&redirect_uri=#{GOOGLEDRIVE_REDIRECT_URI}&scope=email profile&state=#{self.id.to_s}&access_type=offline&prompt=consent"
