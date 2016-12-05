@@ -93,21 +93,41 @@ class Account
   end
 
   def refresh_tokens
-    options = {
-      body: {
-        grant_type: "refresh_token",
-        refresh_token: self.refresh_token,
-        client_id: BOX_CLIENT_ID,
-        client_secret: BOX_CLIENT_SECRET
+    case self.platform
+    when "box"
+      Account.base_uri BOX_BASE_URI
+      options = {
+        body: {
+          grant_type: "refresh_token",
+          refresh_token: self.refresh_token,
+          client_id: BOX_CLIENT_ID,
+          client_secret: BOX_CLIENT_SECRET
+        }
       }
-    }
-    response = self.class.post("/oauth2/token", options)
-    data = JSON.parse(response.body)
-    self.update_attributes(
-      {
-        access_token: data["access_token"],
-        refresh_token: data["refresh_token"],
-        token_updated_at: Time.now
-      })
+      response = self.class.post("/oauth2/token", options)
+      data = JSON.parse(response.body)
+      self.update_attributes({
+          access_token: data["access_token"],
+          refresh_token: data["refresh_token"],
+          token_updated_at: Time.now
+        })
+    when "onedrive"
+      Account.base_uri ONEDRIVE_BASE_URI
+      options = {
+        body: {
+          grant_type: "refresh_token",
+          refresh_token: self.refresh_token,
+          client_id: ONEDRIVE_CLIENT_ID,
+          client_secret: ONEDRIVE_CLIENT_SECRET,
+          redirect_uri: ONEDRIVE_REDIRECT_URI
+        }
+      }
+      data = JSON.parse(response.body)
+      self.update_attributes({
+          access_token: data["access_token"],
+          refresh_token: data["refresh_token"],
+          token_updated_at: Time.now
+        })
+    end
   end
 end
