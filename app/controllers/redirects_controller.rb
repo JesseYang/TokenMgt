@@ -7,6 +7,8 @@ class RedirectsController < ApplicationController
   end
 
   def onedrive
-  	account = Account.where(id: params[:state]).first
+  	# account = Account.where(id: params[:state]).first
+    # retval = account.get_tokens
+    redirect_to "/" and return
   end
 end
