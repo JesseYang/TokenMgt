@@ -20,6 +20,9 @@ class Account
   ONEDRIVE_CLIENT_SECRET = "kPJzHHpzgwefwMrq8gxfORs"
   ONEDRIVE_REDIRECT_URI = "https://b-fox.cn:3001/redirects/onedrive"
 
+  GOOGLEDRIVE_CLIENT_ID = "1019535295007-54qg2bs003pejvvq26gqiqk90c5re3p4.apps.googleusercontent.com"
+  GOOGLEDRIVE_CLIENT_SECRET = "rhcyewEi_2-dI70Va8rIU8U5"
+  GOOGLEDRIVE_REDIRECT_URI = "http://b-fox.cn:3001/redirects/googledrive/"
 
   def self.create_account(platform, account, password)
     account = Account.create(platform: platform, account: account, password: password)
@@ -28,7 +31,8 @@ class Account
   def self.platforms_for_select
     hash = {
       "box": "box",
-      "onedrive": "onedrive"
+      "onedrive": "onedrive",
+      "googledrive": "googledrive"
     }
     hash
   end
@@ -39,6 +43,9 @@ class Account
     end
     if self.platform == "onedrive"
       return "https://login.live.com/oauth20_authorize.srf?client_id=#{ONEDRIVE_CLIENT_ID}&scope=onedrive.readwrite offline_access&response_type=code&redirect_uri=#{ONEDRIVE_REDIRECT_URI}?id=#{self.id.to_s}"
+    end
+    if self.platform == "googledrive"
+      return "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=#{GOOGLEDRIVE_CLIENT_ID}&redirect_uri=#{GOOGLEDRIVE_REDIRECT_URI}&scope=email profile&state=#{self.id.to_s}&access_type=offline&prompt=consent"
     end
   end
 

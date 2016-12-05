@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     collection do
       get :box
       get :onedrive
+      get :googledrive
     end
   end
 

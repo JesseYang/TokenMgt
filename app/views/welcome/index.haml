@@ -11,6 +11,8 @@
         %a.box-link{"data-toggle" => "tab", :href => "#box-tab"} Box
       %li
         %a.onedrive-link{"data-toggle" => "tab", :href => "#onedrive-tab"} OneDrive
+      %li
+        %a.googledrive-link{"data-toggle" => "tab", :href => "#googledrive-tab"} GoogleDrive
     .tab-content.w80.auto
       #box-tab.tab-pane.active
         .table-wrapper.auto
@@ -68,6 +70,35 @@
                       %a{:href => "/?tab=onedrive&page=#{page}"}= page
                   %li
                     %a{:href => "/?tab=onedrive&page=#{@onedrive_accounts[:next_page]}"} »
+      #googledrive-tab.tab-pane
+        .table-wrapper.auto
+          - if @googledrive_accounts[:data].length == 0
+            .notice.mt20.ml20 没有googledrive账户
+          - else
+            %table.table
+              %tr.header
+                %th.column-account 账号
+                %th.column-password 密码
+                %th.column-password 操作
+              - @googledrive_accounts[:data].each do |e|
+                %tr.record{data: {id: e.id, platform: "box"}}
+                  %td.account= e.platform
+                  %td.password= e.password
+                  %td
+                    = link_to "登录", e.login_url
+                    = link_to "编辑", "javascript:void(0);", class: "edit-account"
+            .select-page 
+              %span.totalitems= "共#{@googledrive_accounts[:total_page]}页,总计#{@googledrive_accounts[:total_number]}条"
+              %span.choice-page
+                %ul.pagination.pagination-sm
+                  %li
+                    %a{:href => "/?tab=googledrive&page=#{@googledrive_accounts[:previous_page]}"} «
+                  - ( (@googledrive_accounts[:previous_page] > 2 ? @googledrive_accounts[:previous_page] - 2 : 1) .. (@googledrive_accounts[:next_page] < @googledrive_accounts[:total_page] - 2 ? @googledrive_accounts[:next_page] + 2 : @googledrive_accounts[:total_page]) ).to_a.each do |page|
+                    %li
+                      %a{:href => "/?tab=googledrive&page=#{page}"}= page
+                  %li
+                    %a{:href => "/?tab=googledrive&page=#{@googledrive_accounts[:next_page]}"} »
+
       %button.mt30.l.btn.btn-primary{"data-toggle" => "modal", "data-target" => "#create-account", :type => "button"} 创建
 
 

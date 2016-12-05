@@ -1,6 +1,8 @@
 $ ->
   if window.platform == "onedrive"
     $(".onedrive-link").trigger 'click'
+  if window.platform == "googledrive"
+    $(".googledrive-link").trigger 'click'
 
   $(".edit-account").click ->
     $("#edit-account").modal('show')
