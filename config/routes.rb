@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tokens do
+  end
+
   resources :accounts do
   end
 
