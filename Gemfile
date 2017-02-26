@@ -9,6 +9,7 @@ gem 'compass-rails'
 gem 'bootstrap-sass'
 gem 'kaminari'
 gem 'httparty'
+gem 'rufus-scheduler'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
