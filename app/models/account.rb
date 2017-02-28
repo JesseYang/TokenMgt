@@ -7,6 +7,7 @@ class Account
 
   BOX_BASE_URI = "https://api.box.com"
   ONEDRIVE_BASE_URI = "https://login.live.com"
+  DROPBOX_BASE_URI = "https://api.dropboxapi.com"
 
   field :platform, type: String
   field :account, type: String
@@ -18,6 +19,10 @@ class Account
   BOX_CLIENT_ID = "buq4gus2fhoariwcaq0r15nf6l2u8auf"
   BOX_CLIENT_SECRET = "gi5W2ysE3Q0CtNhoqbVHjD6GMSaaycPQ"
   BOX_REDIRECT_URI = "https://209.9.107.220:3001/redirects/box"
+
+  DROPBOX_CLIENT_ID = "x2jyzvl50eiozhw"
+  DROPBOX_CLIENT_SECRET = "q6ika7n5d4jeyw0"
+  DROPBOX_REDIRECT_URI = "https://209.9.107.220:3001/redirects/dropbox"
 
   ONEDRIVE_CLIENT_ID = "f396f15e-356d-45df-83a9-8bafb50129ad"
   ONEDRIVE_CLIENT_SECRET = "kPJzHHpzgwefwMrq8gxfORs"
@@ -43,6 +48,9 @@ class Account
   def login_url
     if self.platform == "box"
       return "https://account.box.com/api/oauth2/authorize?response_type=code&client_id=#{BOX_CLIENT_ID}&state=#{self.id.to_s}&redirect_uri=#{BOX_REDIRECT_URI}"
+    end
+    if self.platform == "dropbox"
+      return "https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=#{DROPBOX_CLIENT_ID}&state=#{self.id.to_s}&redirect_uri=#{DROPBOX_REDIRECT_URI}"
     end
     if self.platform == "onedrive"
       return "https://login.live.com/oauth20_authorize.srf?client_id=#{ONEDRIVE_CLIENT_ID}&scope=onedrive.readwrite offline_access&response_type=code&state=#{self.id.to_s}&redirect_uri=#{ONEDRIVE_REDIRECT_URI}"
@@ -70,6 +78,21 @@ class Account
           access_token: data["access_token"],
           refresh_token: data["refresh_token"],
           token_updated_at: Time.now
+        })
+    when "dropbox"
+      Account.base_uri DROPBOX_BASE_URI
+      options = {
+        body: {
+          grant_type: "authorization_code",
+          code: code,
+          client_id: DROPBOX_CLIENT_ID,
+          client_secret: DROPBOX_CLIENT_SECRET
+        }
+      }
+      response = self.class.post("/oauth2/token", options)
+      data = JSON.parse(response.body)
+      self.update_attributes({
+          access_token: data["access_token"]
         })
     when "onedrive"
       Account.base_uri ONEDRIVE_BASE_URI

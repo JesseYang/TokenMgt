@@ -3,6 +3,9 @@ class WelcomeController < ApplicationController
     box_accounts = Account.where(platform: "box")
     @box_accounts = auto_paginate(box_accounts)
 
+    dropbox_accounts = Account.where(platform: "dropbox")
+    @dropbox_accounts = auto_paginate(dropbox_accounts)
+
     onedrive_accounts = Account.where(platform: "onedrive")
     @onedrive_accounts = auto_paginate(onedrive_accounts)
 

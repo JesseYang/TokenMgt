@@ -1,4 +1,6 @@
 $ ->
+  if window.platform == "dropbox"
+    $(".dropbox-link").trigger 'click'
   if window.platform == "onedrive"
     $(".onedrive-link").trigger 'click'
   if window.platform == "googledrive"
