@@ -17,15 +17,15 @@ class Account
 
   BOX_CLIENT_ID = "buq4gus2fhoariwcaq0r15nf6l2u8auf"
   BOX_CLIENT_SECRET = "gi5W2ysE3Q0CtNhoqbVHjD6GMSaaycPQ"
-  BOX_REDIRECT_URI = "https://117.121.10.67:3001/redirects/box"
+  BOX_REDIRECT_URI = "https://209.9.107.220:3001/redirects/box"
 
   ONEDRIVE_CLIENT_ID = "f396f15e-356d-45df-83a9-8bafb50129ad"
   ONEDRIVE_CLIENT_SECRET = "kPJzHHpzgwefwMrq8gxfORs"
-  ONEDRIVE_REDIRECT_URI = "https://b-fox.cn:3001/redirects/onedrive"
+  ONEDRIVE_REDIRECT_URI = "https://209.9.107.220:3001/redirects/onedrive"
 
   GOOGLEDRIVE_CLIENT_ID = "1019535295007-54qg2bs003pejvvq26gqiqk90c5re3p4.apps.googleusercontent.com"
   GOOGLEDRIVE_CLIENT_SECRET = "rhcyewEi_2-dI70Va8rIU8U5"
-  GOOGLEDRIVE_REDIRECT_URI = "http://b-fox.cn:3001/redirects/googledrive/"
+  GOOGLEDRIVE_REDIRECT_URI = "http://209.9.107.220:3001/redirects/googledrive/"
 
   def self.create_account(platform, account, password)
     account = Account.create(platform: platform, account: account, password: password)
