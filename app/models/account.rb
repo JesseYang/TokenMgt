@@ -39,7 +39,7 @@ class Account
   def self.platforms_for_select
     hash = {
       "box": "box",
-      "dropbox": "dropbox"
+      "dropbox": "dropbox",
       "onedrive": "onedrive",
       "googledrive": "googledrive"
     }
