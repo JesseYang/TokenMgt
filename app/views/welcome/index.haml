@@ -44,8 +44,7 @@
                       %a{:href => "/?tab=box&page=#{page}"}= page
                   %li
                     %a{:href => "/?tab=box&page=#{@box_accounts[:next_page]}"} »
-    .tab-content.w80.auto
-      #dropbox-tab.tab-pane.active
+      #dropbox-tab.tab-pane
         .table-wrapper.auto
           - if @dropbox_accounts[:data].length == 0
             .notice.mt20.ml20 没有dropbox.com账户
