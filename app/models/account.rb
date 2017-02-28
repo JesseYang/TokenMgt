@@ -87,7 +87,8 @@ class Account
           grant_type: "authorization_code",
           code: code,
           client_id: DROPBOX_CLIENT_ID,
-          client_secret: DROPBOX_CLIENT_SECRET
+          client_secret: DROPBOX_CLIENT_SECRET,
+          redirect_uri: DROPBOX_REDIRECT_URI
         }
       }
       response = self.class.post("/oauth2/token", options)
