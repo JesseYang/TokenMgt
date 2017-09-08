@@ -16,3 +16,7 @@ $ ->
     $("#edit-account #password").val(tr.find(".password").text())
     $("#edit-account form").attr("action", "/accounts/" + tr.attr("data-id"))
 
+
+  $(".refresh-btn").click ->
+    $(this).attr("disabled", "true")
+    window.location.href = "/tokens/refresh"

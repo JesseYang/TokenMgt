@@ -15,4 +15,12 @@ class TokensController < ApplicationController
     access_tokens = box_accounts.map { |e| e.access_token } .select { |e| e.present? }
     render text: access_tokens.join(',') and return
   end
+
+  def refresh
+    box_accounts = Account.where(platform: "box", account: /box*/)
+    box_accounts.each do |e|
+      e.refresh_tokens
+    end
+    redirect_to "/" and return
+  end
 end

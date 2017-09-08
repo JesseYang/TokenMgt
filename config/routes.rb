@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   end
 
   resources :tokens do
+    collection do
+      get :refresh
+    end
   end
 
   resources :accounts do
